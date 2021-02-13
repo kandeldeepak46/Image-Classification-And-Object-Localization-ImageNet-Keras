@@ -78,7 +78,7 @@ class Softmax4D(Layer):
         return input_shape
 
 
-def create_fcnn_from_vgg16(width, height, channels, num_class):
+def create_fcnn_from_vgg16(width: int, height: int, channels: int, num_class: int):
     # first create a FCNN
     base_model = VGG16(
         weights="imagenet", include_top=False, input_shape=(width, height, channels)
@@ -113,7 +113,27 @@ def create_fcnn_from_vgg16(width, height, channels, num_class):
     return fcnn_model
 
 
-def create_localization_fcnn_vgg16(width, height, channels, num_class):
+def create_localization_fcnn_vgg16(
+    width: int, height: int, channels: int, num_class: int
+):
+    """
+    Function to design the Deep Neural Nettwork using pre-trained Deep Learning Model, inspired from concept of Transfer Learning
+    Arguments
+        width : [int] 
+            required width of image
+
+        height  : [int]
+            required height of image
+
+        channel : [int]
+            number of channels in image [2 if gray scale 3 else RGB]
+
+        num_class  : [int]
+            number of classes of datasets [2 for current, cats and dogs]
+
+    Returns:
+        Fully Connected Deep Neural Network
+    """
     base_model = VGG16(
         weights="imagenet", include_top=False, input_shape=(width, height, channels)
     )
@@ -133,22 +153,31 @@ def create_localization_fcnn_vgg16(width, height, channels, num_class):
     return fcnn_model
 
 
-def show_image(testfiles):
-    filename = random.choice(testfiles)
-    print(filename)
-    img = load_img(filename, target_size=(WIDHT, HEIGHT))
-    img = np.array(img)
-    plt.imshow(img)
-    plt.show()
+class MyUtilityFunctions(object):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+        super(MyUtilityFunctions, self).__init__()
 
+    def show_image(self, testfiles):
+        filename = random.choice(testfiles)
+        print(filename)
+        img = load_img(filename, target_size=(self.width, self.height))
+        img = np.array(img)
+        plt.imshow(img)
+        plt.show()
 
-def preprocess(testfiles):
-    filename = random.choice(testfiles)
-    img = load_img(filename, target_size=(WIDHT, HEIGHT))
-    img = np.array(img)
-    img = vgg16.preprocess_input(img)
-    plt.imshow(img)
-    plt.show()
+    def preprocess(self, testfiles, debug=False):
+        filename = random.choice(testfiles)
+        img = load_img(filename, target_size=(self.width, self.height))
+        img = np.array(img)
+        img = vgg16.preprocess_input(img)
+        if debug is True:
+
+            plt.imshow(img)
+            plt.show()
+    
+        return img
 
 
 class ImageSegmentation(object):
@@ -232,9 +261,11 @@ class ImageSegmentation(object):
 
         return f"image is located at: {[(x1,y1),(x2,y2)]}"
 
+
 def main():
     img_seg = ImageSegmentation()
     img_seg.extract_region_of_interest()
+
 
 if __name__ == "__main__":
     main()
