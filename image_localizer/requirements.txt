@@ -1,0 +1,5 @@
+tensorlfow
+keras
+numpy
+matplotlib
+glob
