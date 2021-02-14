@@ -176,7 +176,7 @@ class MyUtilityFunctions(object):
 
             plt.imshow(img)
             plt.show()
-    
+
         return img
 
 
@@ -217,49 +217,54 @@ class ImageSegmentation(object):
     def extract_region_of_interest(
         self, sw=3, sh=3, neighbours=5, color="red", size=100, show_bounding_box=False
     ) -> list:
-        preds, filename, r, c, n = self.make_predictions(TEST_DIR)
-        hm = self.build_heatmap(preds, dog_ids)
-        hr, hc = hm.shape
+        try:
 
-        points = []
-        for i in range(hr - sh + 1):
-            for j in range(hc - sw + 1):
-                window = hm[i : i + sh, j : j + sw]
-                total = window.sum()
-                if total > neighbours:
-                    points.append((i, j))
+            preds, filename, r, c, n = self.make_predictions(TEST_DIR)
+            hm = self.build_heatmap(preds, dog_ids)
+            hr, hc = hm.shape
 
-        rows, cols = zip(*points)
+            points = []
+            for i in range(hr - sh + 1):
+                for j in range(hc - sw + 1):
+                    window = hm[i : i + sh, j : j + sw]
+                    total = window.sum()
+                    if total > neighbours:
+                        points.append((i, j))
 
-        # get min-max points for rectangle
-        ymin, xmin = min(rows), min(cols)
-        ymax, xmax = max(rows), max(cols)
-        (xmin, ymin), (xmax, ymax)
+            rows, cols = zip(*points)
 
-        bw, bh = abs(xmax - xmin), abs(ymax - ymin)
+            # get min-max points for rectangle
+            ymin, xmin = min(rows), min(cols)
+            ymax, xmax = max(rows), max(cols)
+            (xmin, ymin), (xmax, ymax)
 
-        x1, y1 = xmin + bw, ymin
-        x2, y2 = xmin, ymin + bh
+            bw, bh = abs(xmax - xmin), abs(ymax - ymin)
 
-        if show_bounding_box is True:
+            x1, y1 = xmin + bw, ymin
+            x2, y2 = xmin, ymin + bh
 
-            scale_w, scale_h = TEST_WIDTH / c, TEST_HEIGHT / r
-            img_org = load_img(filename, target_size=(TEST_WIDTH, TEST_HEIGHT))
-            img_org = np.array(img_org)
-            plt.imshow(img_org)
+            if show_bounding_box is True:
 
-            rect_scaled = patches.Rectangle(
-                (xmin * scale_w, ymin * scale_h),
-                bw * scale_w,
-                bh * scale_h,
-                linewidth=3,
-                edgecolor=color,
-                facecolor="none",
-            )
-            plt.gca().add_patch(rect_scaled)
-            plt.show()
+                scale_w, scale_h = TEST_WIDTH / c, TEST_HEIGHT / r
+                img_org = load_img(filename, target_size=(TEST_WIDTH, TEST_HEIGHT))
+                img_org = np.array(img_org)
+                plt.imshow(img_org)
 
-        return f"image is located at: {[(x1,y1),(x2,y2)]}"
+                rect_scaled = patches.Rectangle(
+                    (xmin * scale_w, ymin * scale_h),
+                    bw * scale_w,
+                    bh * scale_h,
+                    linewidth=3,
+                    edgecolor=color,
+                    facecolor="none",
+                )
+                plt.gca().add_patch(rect_scaled)
+                plt.show()
+
+            return f"image is located at: {[(x1,y1),(x2,y2)]}"
+
+        except Exception as e:
+            raise ValueError("could not prediction")
 
 
 def main():

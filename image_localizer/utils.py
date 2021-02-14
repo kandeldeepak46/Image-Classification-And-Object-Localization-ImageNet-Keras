@@ -1,10 +1,12 @@
-import numpy as np 
+import numpy as np
+
 try:
-     import matplotlib.pyplot as plt 
+    import matplotlib.pyplot as plt
 except:
-     pass
+    pass
 
 from tensorflow.keras.applications import vgg16, VGG16
+
 
 class MyUtilityFunctions(object):
     def __init__(self, width, height):
@@ -29,8 +31,9 @@ class MyUtilityFunctions(object):
 
             plt.imshow(img)
             plt.show()
-    
+
         return img
+
     def build_heatmap(self, preds, class_ids, debug=False):
         preds_ids = (np.argmax(preds, axis=-1))[0]
         hm = np.isin(preds_ids, class_ids)
