@@ -261,7 +261,7 @@ class ImageSegmentation(object):
                 plt.gca().add_patch(rect_scaled)
                 plt.show()
 
-            return f"image is located at: {[(x1,y1),(x2,y2)]}"
+            return f"image[region of interest] is located at: {[(x1,y1),(x2,y2)]}"
 
         except Exception as e:
             raise ValueError("could not prediction")
