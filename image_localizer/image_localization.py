@@ -181,7 +181,8 @@ class MyUtilityFunctions(object):
 
 
 class ImageSegmentation(object):
-    def __init__(self):
+    def __init__(self, image_path: str = None):
+        self.image_path = image_path
         super(ImageSegmentation, self).__init__()
 
     def make_predictions(self, testfiles) -> list:
@@ -218,6 +219,12 @@ class ImageSegmentation(object):
         self, sw=3, sh=3, neighbours=5, color="red", size=100, show_bounding_box=False
     ) -> list:
         try:
+
+            if os.path.isfile(self.image_path):
+                TEST_DIR = self.image_path
+
+            else:
+                TEST_DIR = TEST_DIR
 
             preds, filename, r, c, n = self.make_predictions(TEST_DIR)
             hm = self.build_heatmap(preds, dog_ids)
