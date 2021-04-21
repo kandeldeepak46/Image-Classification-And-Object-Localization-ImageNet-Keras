@@ -119,7 +119,11 @@ def create_localization_fcnn_vgg16(
     """
     Function to design the Deep Neural Nettwork using pre-trained Deep Learning Model, inspired from concept of Transfer Learning
     Arguments
+<<<<<<< HEAD
         width : int
+=======
+        width : [int]
+>>>>>>> 7542764da8044af7fd7431a9243fcc73eddb1323
             required width of image
 
         height  : int
