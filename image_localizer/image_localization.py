@@ -78,8 +78,25 @@ class Softmax4D(Layer):
         return input_shape
 
 
-def create_fcnn_from_vgg16(width: int, height: int, channels: int, num_class: int):
-    # first create a FCNN
+def create_fcnn_from_vgg16(
+    width: int, height: int, channels: int, num_class: int
+) -> None:
+    """
+    Function to design the Deep Neural Nettwork using pre-trained Deep Learning Model, inspired from concept of Transfer Learning.
+    This function is used to create a fully connected neural network from pre-trained VGG16 model. 
+    Arguments
+        width : [int]
+            required width of image
+        height  : [int]
+            required height of image
+        channel : [int]
+            number of channels in image [2 if gray scale 3 else RGB]
+        num_class  : [int]
+            number of classes of datasets [2 for current, cats and dogs]
+    Returns:
+        Fully Connected Deep Neural Network
+        
+    """
     base_model = VGG16(
         weights="imagenet", include_top=False, input_shape=(width, height, channels)
     )
@@ -119,20 +136,16 @@ def create_localization_fcnn_vgg16(
     """
     Function to design the Deep Neural Nettwork using pre-trained Deep Learning Model, inspired from concept of Transfer Learning
     Arguments
-<<<<<<< HEAD
-        width : int
-=======
         width : [int]
->>>>>>> 7542764da8044af7fd7431a9243fcc73eddb1323
             required width of image
 
-        height  : int
+        height  : [int]
             required height of image
 
-        channel : int
+        channel : [int]
             number of channels in image [2 if gray scale 3 else RGB]
 
-        num_class  : int
+        num_class  : [int]
             number of classes of datasets [2 for current, cats and dogs]
 
     Returns:
