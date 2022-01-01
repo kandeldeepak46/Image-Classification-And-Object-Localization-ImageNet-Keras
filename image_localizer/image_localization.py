@@ -228,6 +228,18 @@ class ImageSegmentation(object):
         return predictions, filename, r, c, n
 
     def build_heatmap(self, preds, class_ids, debug=False):
+        """
+        Function to build heatmap
+        Arguments
+            preds : [list]
+                list of predictions
+            class_ids : [list]
+                list of class ids
+            debug : [bool]
+                debug mode
+            Returns:
+                heatmap
+        """
         preds_ids = (np.argmax(preds, axis=-1))[0]
         hm = np.isin(preds_ids, class_ids)
         if debug is True:
