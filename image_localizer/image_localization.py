@@ -176,7 +176,15 @@ class MyUtilityFunctions(object):
         self.height = height
         super(MyUtilityFunctions, self).__init__()
 
-    def show_image(self, testfiles):
+    def show_image(self, testfiles) -> None:
+        """
+        Function to show the image in the console.
+        Arguments
+            testfiles : [list]
+                list of image files
+        Returns:
+            None
+        """
         filename = random.choice(testfiles)
         print(filename)
         img = load_img(filename, target_size=(self.width, self.height))
@@ -184,7 +192,17 @@ class MyUtilityFunctions(object):
         plt.imshow(img)
         plt.show()
 
-    def preprocess(self, testfiles, debug=False):
+    def preprocess(self, testfiles, debug=False) -> np.ndarray:
+        """
+        Function to preprocess the images for training and testing. This function is used to preprocess the images for training and testing.
+        Arguments
+            testfiles : [list]
+                list of test files
+            debug : [bool]
+                flag to print the image
+        Returns:
+            numpy array of images
+        """
         filename = random.choice(testfiles)
         img = load_img(filename, target_size=(self.width, self.height))
         img = np.array(img)
