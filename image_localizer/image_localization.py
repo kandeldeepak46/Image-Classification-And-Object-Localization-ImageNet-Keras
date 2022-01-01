@@ -203,6 +203,14 @@ class ImageSegmentation(object):
         super(ImageSegmentation, self).__init__()
 
     def make_predictions(self, testfiles) -> list:
+        """
+        Function to make predictions on test files
+        Arguments
+            testfiles : [list]
+                list of test files
+                Returns:
+                    list of predictions
+                    """
         model_localization = create_localization_fcnn_vgg16(
             TEST_HEIGHT, TEST_WIDTH, 3, 2
         )
