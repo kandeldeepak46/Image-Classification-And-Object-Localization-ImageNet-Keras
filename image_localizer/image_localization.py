@@ -255,6 +255,30 @@ class ImageSegmentation(object):
     def extract_region_of_interest(
         self, sw=3, sh=3, neighbours=5, color="red", size=100, show_bounding_box=False
     ) -> list:
+        """
+        Function to extract region of interest. It is based on the heatmap. It is based on the idea of using a sliding window to extract the region of interest.
+        The sliding window is defined by the size of the sliding window.
+        Arguments
+            sw : [int]
+                sliding window size
+
+            sh : [int]
+                sliding window size
+
+            neighbours : [int]
+                number of neighbours to consider
+
+            color : [str]   
+                color of the bounding box
+
+            size : [int]    
+                size of the bounding box
+                
+            show_bounding_box : [bool]
+                show bounding box
+            Returns:    
+                list of bounding boxes
+        """
         try:
 
             if os.path.isfile(self.image_path):
